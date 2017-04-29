@@ -127,4 +127,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+if ON_OPENSHIFT:
+    STATIC_ROOT = os.environ['OPENSHIFT_REPO_DIR'] + 'wsgi/static/'
+else:
+    STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
+
 STATIC_URL = '/static/'
