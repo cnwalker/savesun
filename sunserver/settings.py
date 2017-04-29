@@ -22,10 +22,19 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '+aph98tqa-!sm%5_1@h41ervkiful*i(csup43f6it9xl9r$-+'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+ON_OPENSHIFT = os.environ.get('OPENSHIFT_REPO_DIR')
 
-ALLOWED_HOSTS = []
+if ON_OPENSHIFT:
+    # DEBUG mode should be False on production so that users don't get
+    # Complete error logs
+    DEBUG = True
+    # Only host the production server on production
+    ALLOWED_HOSTS = ['savesun-skypath.rhcloud.com']
+    # Redirect all HTTP requests to HTTPS
+    SECURE_SSL_REDIRECT = True
+else:
+    DEBUG = True
+    ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
