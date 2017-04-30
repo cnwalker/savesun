@@ -16,9 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from sunapp.views import IndexView
+from sunapp.views import IndexView, predict_view
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',  IndexView.as_view()),
+    url(r'^usage/$', predict_view),
 ]
