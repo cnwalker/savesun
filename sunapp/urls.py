@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^examples/', views.ExampleView.as_view()),
     url(r'^another_one/', views.AnotherPageView.as_view()),
     url(r'^page/', views.StandardPageView.as_view()),
+    url(r'^analytics', views.AnalyticsView.as_view()),
     url(r'^usage/', views.predict_view),
 ]
