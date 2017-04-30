@@ -19,6 +19,12 @@ class AboutView(TemplateView):
 class ExampleView(TemplateView):
     template_name = "examples.html"
 
+class AnotherPageView(TemplateView):
+    template_name = "another_page.html"
+
+class StandardPageView(TemplateView):
+    template_name = "page.html"
+
 def predict_view(request):
     if request.method == "GET":
         end_time = timezone.now()
