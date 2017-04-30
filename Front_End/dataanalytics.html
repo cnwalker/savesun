@@ -56,8 +56,9 @@
     </div>
 
 
-    <svg id="spending-bymonth" width="960" height="500" margin="100"></svg>
-    <svg id="spending-byperson" width="960" height="500" padding="100"></svg>
+    <svg id="spending-bymonth" width="960" height="500"></svg>
+    <svg id="spending-byperson" width="960" height="500"></svg>
+    <svg id="personal-spending" width="960" height="500"></svg>
 
     <footer>
       <p><img src="images/twitter.png" alt="twitter" />&nbsp;<img src="images/facebook.png" alt="facebook" />&nbsp;<img src="images/rss.png" alt="rss" /></p>
@@ -256,48 +257,198 @@ function viz(data) {
       })
       .on("click", function(d) { showDetail(d.date); });
 };
+function showPersonalUsage(name) {
+  var byPerson = [
+  {
+    "name": "Jenny",
+    "division": "heater",
+    "energy": 1
+  },
+  {
+    "name": "Jenny",
+    "division": "cook",
+    "energy": 3
+  },
+  {
+    "name": "Jenny",
+    "division": "bath",
+    "energy": 7
+  },
+  {
+    "name": "Jenny",
+    "division": "entn",
+    "energy": 1
+  },
+  {
+    "name": "Harry",
+    "division": "heater",
+    "energy": 2
+  },
+  {
+    "name": "Harry",
+    "division": "cook",
+    "energy": 3
+  },
+  {
+    "name": "Harry",
+    "division": "bath",
+    "energy": 4
+  },
+  {
+    "name": "Harry",
+    "division": "entn",
+    "energy": 13
+  }
+];
+  var svg = d3.select("#personal-spending"),
+    margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = +svg.attr("width") - margin.left - margin.right,
+    height = +svg.attr("height") - margin.top - margin.bottom;
 
+  svg.style("display", "block");
+  var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
+      y = d3.scaleLinear().rangeRound([height, 0]);
+
+  svg.selectAll("g").remove();
+  var g = svg.append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  g.append("text")
+      .attr("x", (width/2))
+      .attr("y", 0)
+      .attr("text-anchor", "middle")
+      .style("font-size", "16px")
+      .style("text-decoration", "underline")
+      .text("Energy Consumption (kWh)")
+  viz(byPerson);
+  function viz(data) {
+    console.log(data);
+    data = data.filter(function(d) {
+      return d.name == name;
+    })
+
+    data = data.sort(function(a, b) {
+      return b.energy - a.energy;
+    });
+
+    x.domain(data.map(function(d) { return d.division; }));
+    y.domain([0, d3.max(data, function(d) { return d.energy; })]);
+
+    g.append("g")
+        .attr("class", "axis axis--x")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x));
+
+    g.append("g")
+        .attr("class", "axis axis--y")
+        .call(d3.axisLeft(y))
+      .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", "0.71em")
+        .attr("text-anchor", "end")
+        .text("Energy");
+
+    //data binding
+    g.selectAll(".bar")
+      .data(data)
+      .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", function(d) { return x(d.division); })
+        .attr("y", function(d) { return y(d.energy); })
+        .attr("width", x.bandwidth())
+        .attr("height", function(d) { return height - y(d.energy); })
+        .on("mouseover", function(d) {
+          highlight_bar(d);
+          }) 
+        .on("mouseout", function() {
+          bar_text.style("display", "none");
+        });
+  }
+
+  function highlight_bar(d) {
+    bar_text = g.append("text").attr("x", x(d.division) + x.bandwidth()/2)
+      .attr("y", y(d.energy) - 5)
+      .attr("width", x.bandwidth())
+      .attr("height", height - y(d.energy) )
+      .text(d.energy)
+      .attr("class", "text")
+      .style("display", "block");
+
+  }
+}
 function showDetail(date) {
   var byPerson = [
   {
     "name": "Jenny",
-    "energy": 21,
-    "month": 1
+    "energy": 12,
+    "month": 1,
+    "heater": 1,
+    "cook": 3,
+    "bath": 7,
+    "entn": 1
   },
   {
     "name": "Jenny",
     "energy": 42,
-    "month": 2
+    "month": 2,
+    "heater": 10,
+    "cook": 13,
+    "bath": 8,
+    "entn": 11
   },
   {
     "name": "Harry",
     "energy": 12,
-    "month": 1
+    "month": 1,
+    "heater": 1,
+    "cook": 1,
+    "bath": 3,
+    "entn": 7
   },
   {
     "name": "Harry",
     "energy": 20,
-    "month": 2
+    "month": 2,
+    "heater": 2,
+    "cook": 3,
+    "bath": 4,
+    "entn": 13
   },
   {
     "name": "Cloud",
     "energy": 34,
-    "month": 1
+    "month": 1,
+    "heater": 10,
+    "cook": 2,
+    "bath": 9,
+    "entn": 13
   },
   {
     "name": "Cloud",
-    "energy": 14,
-    "month": 2
+    "energy": 54,
+    "month": 2,
+    "heater": 29,
+    "cook": 10,
+    "bath": 2,
+    "entn": 13
   },
   {
     "name": "Sunny",
     "energy": 23,
-    "month": 1
+    "month": 1,
+    "heater": 2,
+    "cook": 4,
+    "bath": 7,
+    "entn": 10
   },
   {
     "name": "Sunny",
     "energy": 3,
-    "month": 2
+    "month": 2,
+    "heater": 0,
+    "cook": 0,
+    "bath": 3,
+    "entn": 0
   }
 ];
   var svg = d3.select("#spending-byperson"),
@@ -362,7 +513,8 @@ function showDetail(date) {
           }) 
         .on("mouseout", function() {
           bar_text.style("display", "none");
-        });
+        })
+        .on("click", function(d) { showPersonalUsage(d.name); });
   }
 
   function highlight_bar(d) {

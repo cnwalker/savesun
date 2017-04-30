@@ -547,6 +547,9 @@ ul#nav li a:hover,ul#nav li a:focus {
 #spending-byperson {
   padding-left: 200px;
 }
+#personal-spending {
+  padding-left: 200px;
+}
 .bar {
   fill: steelblue;
 }
