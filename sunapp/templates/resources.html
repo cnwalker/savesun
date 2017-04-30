@@ -1,0 +1,47 @@
+<html>
+<head>
+
+</head>
+
+<body>
+    <div id="counter" align="center">
+        Total Value: 10000
+    </div>
+
+    <button id="stove"> Use Stove! (1000 kWHz) </button>
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        var handleResponse = function(response) {
+            $('#counter').text('Total Value: ' + response.value.toString());
+        };
+
+        var updateValue = function() {
+            $.ajax({
+                url:'/current_resources/',
+                method: "GET",
+                dataType: 'json',
+                contentType: 'application/json',
+                success: handleResponse
+            });
+        }
+
+        var decrementResources = function() {
+            $.ajax({
+                method: "POST",
+                url: "/current_resources/",
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({'decrementBy': '320'})
+            });
+        }
+
+        $('#stove').click(decrementResources);
+
+        setInterval(updateValue, 1000);
+    </script>
+</body>
+</html>
