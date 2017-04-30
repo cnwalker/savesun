@@ -13,6 +13,12 @@ class IndexView(TemplateView):
     # Displays the main page
     template_name = "index.html"
 
+class AboutView(TemplateView):
+    template_name = "about.html"
+
+class ExampleView(TemplateView):
+    template_name = "examples.html"
+
 def predict_view(request):
     if request.method == "GET":
         end_time = timezone.now()
