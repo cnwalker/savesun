@@ -27,7 +27,7 @@ ON_OPENSHIFT = os.environ.get('OPENSHIFT_REPO_DIR')
 if ON_OPENSHIFT:
     # DEBUG mode should be False on production so that users don't get
     # Complete error logs
-    DEBUG = True
+    DEBUG = False
     # Only host the production server on production
     ALLOWED_HOSTS = ['savesun-skypath.rhcloud.com']
     # Redirect all HTTP requests to HTTPS
