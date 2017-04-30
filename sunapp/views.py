@@ -23,5 +23,5 @@ def predict_view(request):
             new_prediction.save()
         all_predictions = Prediction.objects.all()
         return HttpResponse(json.dumps({
-            'total': float(reduce(lambda x, y: x.current_power + y.current_power, all_predictions))/len(all_predictions)
+            'total': float(reduce(lambda x, y: x.current_power + y.current_power, all_predictions).current_power)/len(all_predictions)
         }))
