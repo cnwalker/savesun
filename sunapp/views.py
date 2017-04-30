@@ -28,6 +28,9 @@ class StandardPageView(TemplateView):
 class AnalyticsView(TemplateView):
     template_name = "analytics.html"
 
+class ResourceView(TemplateView):
+    template_name = "response.html"
+
 def predict_view(request):
     if request.method == "GET":
         end_time = timezone.now()
@@ -39,4 +42,25 @@ def predict_view(request):
         all_predictions = Prediction.objects.all()
         return HttpResponse(json.dumps({
             'total': float(reduce(lambda x, y: x.current_power + y.current_power, all_predictions).current_power)/len(all_predictions)
+        }))
+
+
+@csrf_exempt
+def decrement_resources(request):
+    if len(Resource.objects.all()) == 0:
+        active_resource = Resource(amount=10000)
+        active_resource.save()
+    active_resource = Resource.objects.all()[0]
+
+    if request.method == "GET":
+        return HttpResponse(json.dumps({
+            'value': active_resource.amount
+        }))
+
+    if request.method == "POST":
+        data = json.loads(request.body)
+        active_resource.amount -= int(data.get('decrementBy'))
+        active_resource.save()
+        return HttpResponse(json.dumps({
+            'value': active_resource.amount
         }))
