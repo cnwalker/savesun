@@ -25,6 +25,9 @@ class AnotherPageView(TemplateView):
 class StandardPageView(TemplateView):
     template_name = "page.html"
 
+class AnalyticsView(TemplateView):
+    template_name = "analytics.html"
+
 def predict_view(request):
     if request.method == "GET":
         end_time = timezone.now()
