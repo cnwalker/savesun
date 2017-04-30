@@ -5,3 +5,6 @@ from django.utils import timezone
 class Prediction(models.Model):
     date = models.DateTimeField(auto_now=True)
     current_power = models.IntegerField()
+
+class Resource(models.Model):
+    amount = models.IntegerField()

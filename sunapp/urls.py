@@ -27,5 +27,5 @@ urlpatterns = [
     url(r'^analytics', views.AnalyticsView.as_view()),
     url(r'^usage/', views.predict_view),
     url(r'^current_resources/', views.decrement_resources),
-    url(r'^usage/', views.predict_view),
+    url(r'^resources/', views.ResourceView.as_view()),
 ]

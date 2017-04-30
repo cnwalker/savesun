@@ -5,8 +5,9 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 
 from dateutil.relativedelta import relativedelta
-from models import Prediction
+from models import Prediction, Resource
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 class IndexView(TemplateView):
@@ -29,7 +30,7 @@ class AnalyticsView(TemplateView):
     template_name = "analytics.html"
 
 class ResourceView(TemplateView):
-    template_name = "response.html"
+    template_name = "resources.html"
 
 def predict_view(request):
     if request.method == "GET":
