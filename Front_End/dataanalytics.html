@@ -52,7 +52,7 @@
       </div>
     </div>
     <div id="scroll">
-      <a title="Scroll to the top" class="top" href="#"><img src="images/top.png" alt="top" /></a>
+      <a title="Scroll to the top" class="top" href="#"></a>
     </div>
 
 
@@ -200,6 +200,14 @@ var bymonth = [
     "energy": 20
   }
 ];
+g.append("text")
+    .attr("x", (width/2))
+    .attr("y", 0)
+    .attr("text-anchor", "middle")
+    .style("font-size", "16px")
+    .style("text-decoration", "underline")
+    .text("Daily Energy Consumption (kWh)")
+
 viz(bymonth);
 function viz(data) {
 
@@ -304,7 +312,13 @@ function showDetail(date) {
   svg.selectAll("g").remove();
   var g = svg.append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+  g.append("text")
+      .attr("x", (width/2))
+      .attr("y", 0)
+      .attr("text-anchor", "middle")
+      .style("font-size", "16px")
+      .style("text-decoration", "underline")
+      .text("Energy Consumption by person (kWh)")
   viz(byPerson);
   function viz(data) {
     console.log(data);

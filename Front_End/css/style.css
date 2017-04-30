@@ -542,10 +542,10 @@ ul#nav li a:hover,ul#nav li a:focus {
   text-decoration: underline;
 }
 #spending-bymonth {
-  padding-left: 100px;
+  padding-left: 200px;
 }
 #spending-byperson {
-  padding-left: 100px;
+  padding-left: 200px;
 }
 .bar {
   fill: steelblue;
